@@ -16,12 +16,6 @@ const userSchema = new mongoose.Schema(
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
     },
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-      minlength: 6,
-      select: false,
-    },
     familyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Family",
@@ -35,6 +29,16 @@ const userSchema = new mongoose.Schema(
     isPremium: {
       type: Boolean,
       default: false,
+      required: [true, "Premium status is required"],
+    },
+    emailVerified: {
+      type: Boolean,
+      default: false,
+      required: [true, "Email verification status is required"],
+    },
+    refreshToken: {
+      type: String,
+      default: null,
     },
   },
   {
