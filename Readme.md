@@ -1,4 +1,3 @@
-```markdown
 # HomeHuddle Backend
 
 ## Overview
@@ -147,9 +146,4 @@ homeHuddleBackend/
 
 Report bugs or issues at: [https://github.com/webdevgenius2014/homeHuddleBackend/issues](https://github.com/webdevgenius2014/homeHuddleBackend/issues)
 
-## License
 
-This project is licensed under the ISC License. See the `package.json` for details.
-
-```
-```

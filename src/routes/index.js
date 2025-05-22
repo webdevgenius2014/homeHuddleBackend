@@ -1,9 +1,8 @@
 // src/routes/index.js
 const express = require("express");
 const router = express.Router();
+const authRoutes = require("./authRoutes");
 
-router.use("/test", async (req, res) => {
-  return "Hello test";
-});
+router.use("/auth", authRoutes);
 
 module.exports = router;
