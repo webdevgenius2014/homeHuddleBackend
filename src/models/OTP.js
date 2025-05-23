@@ -22,6 +22,16 @@ const otpSchema = new mongoose.Schema(
       required: [true, "Expiration time is required"],
       index: { expires: "0s" }, // Auto-remove expired OTPs
     },
+    metadata: {
+      familyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Family",
+      },
+      roleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role",
+      },
+    },
   },
   {
     timestamps: true,

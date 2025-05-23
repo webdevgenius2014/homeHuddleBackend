@@ -51,5 +51,31 @@ const sendResetOTPEmail = async (user, otp) => {
     throw new Error("Failed to send reset OTP email");
   }
 };
+const sendInvitationEmail = async (recipient, family, inviter, roleName) => {
+  const joinUrl = `${process.env.FRONTEND_URL}/join-family?code=${family.code}`;
+  const mailOptions = {
+    from: `"HomeHuddle" <${process.env.TRANSPORT_USER}>`,
+    to: recipient.email,
+    subject: `Join ${family.name} on HomeHuddle`,
+    html: `
+      <h2>Hello ${recipient.name}!</h2>
+      <p>You've been invited by ${inviter.name} to join the ${family.name} family on HomeHuddle as a ${roleName}.</p>
+      <p>Use the family code: <strong>${family.code}</strong> or click the link below to join:</p>
+      <a href="${joinUrl}" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+        Join Family
+      </a>
+      <p>This code is valid for 24 hours.</p>
+      <p>If you didn't expect this invitation, please ignore this email.</p>
+    `,
+  };
 
-module.exports = { sendOTPEmail, sendResetOTPEmail };
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`Invitation email sent to ${recipient.email}`);
+  } catch (error) {
+    console.error("Error sending invitation email:", error);
+    throw new Error("Failed to send invitation email");
+  }
+};
+
+module.exports = { sendOTPEmail, sendResetOTPEmail, sendInvitationEmail };
