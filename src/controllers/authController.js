@@ -702,7 +702,20 @@ const logout = async (req, res) => {
     }
 
     // Add access token to blacklist cookie
-    let blockedTokens = req.cookies.blockedTokens || [];
+    // let blockedTokens = req.cookies.blockedTokens || [];
+    let blockedTokens = [];
+
+    if (req.cookies.blockedTokens) {
+      try {
+        blockedTokens = JSON.parse(req.cookies.blockedTokens);
+        if (!Array.isArray(blockedTokens)) {
+          blockedTokens = [];
+        }
+      } catch (err) {
+        blockedTokens = [];
+      }
+    }
+
     blockedTokens.push(accessToken);
 
     res.cookie("blockedTokens", JSON.stringify(blockedTokens), {
