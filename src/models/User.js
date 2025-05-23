@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     familyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Family",
-      required: [true, "Family ID is required"],
+      // required: [true, "Family ID is required"],
     },
     role: {
       type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
       required: [true, "Premium status is required"],
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
     emailVerified: {
       type: Boolean,

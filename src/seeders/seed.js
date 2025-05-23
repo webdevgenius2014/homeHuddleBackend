@@ -4,7 +4,6 @@ const connectToDatabase = require("../config/db");
 const Role = require("../models/Role");
 const User = require("../models/User");
 const Family = require("../models/Family");
-const bcrypt = require("bcryptjs");
 
 dotenv.config();
 
@@ -51,37 +50,48 @@ const seedDatabase = async () => {
     const family = await Family.create({
       name: "Smith Family",
       code: "SMITH123",
+      members: [],
     });
     console.log("✅ Created family");
 
     // Create Users
-    await User.create([
+    const users = await User.create([
       {
         name: "Jane Smith",
         email: "jane.smith@example.com",
-        password: await bcrypt.hash("password123", 12),
         familyId: family._id,
         role: parentRole._id,
         isPremium: true,
+        isActive: true,
+        emailVerified: true,
+        refreshToken: null,
       },
       {
         name: "John Smith",
         email: "john.smith@example.com",
-        password: await bcrypt.hash("password123", 12),
         familyId: family._id,
         role: parentRole._id,
         isPremium: true,
+        isActive: true,
+        emailVerified: true,
+        refreshToken: null,
       },
       {
         name: "Timmy Smith",
         email: "timmy.smith@example.com",
-        password: await bcrypt.hash("password123", 12),
         familyId: family._id,
         role: childRole._id,
         isPremium: false,
+        isActive: true,
+        emailVerified: true,
+        refreshToken: null,
       },
     ]);
-    console.log("✅ Created users");
+
+    // Update family members
+    family.members = users.map((user) => user._id);
+    await family.save();
+    console.log("✅ Created users and updated family members");
 
     console.log("🎉 Database seeded successfully");
     process.exit(0);
